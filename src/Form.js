@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router";
 import "./App.scss";
 /*// Components
 import Header from "./components/header";*/
@@ -27,18 +28,24 @@ function Form() {
     // prevent the browser from autorefresh
     e.preventDefault();
 
+
     // check if either tight fit or loose ift are null and set them to false
     if (!formData["loose_fit"]) {
       formData["loose_fit"] = false;
     } else if (!formData["tight_fit"]) {
       formData["tight_fit"] = false;
-    }
-      console.log(formData);
+    } /*else if (!getUserData("length")) {
+          formData["length"] = 25;
+      } else if (!getUserData("width")) {
+          formData["width"] = 20;
+      }*/
+
+    console.log(formData);
     fetch("https://sizr-backend.azurewebsites.net/adduser", {
       method: "POST",
       cache: "no-cache",
       headers: {
-        content_type: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         username: formData["name"],
@@ -52,35 +59,61 @@ function Form() {
       }),
     })
       .then((response) => {
+        console.log("resp: ", response);
         return response.json();
       })
-      .then((json) => {
-        console.log(json);
-      }).catch((err) => {
-        console.log(err);
+      .then((data) => {
+        console.log("Success: ", data);
       })
+      .catch((err) => {
+        console.log("Error: ", err);
+      });
 
     fetch("https://sizr-backend.azurewebsites.net/recommendshoes", {
       method: "POST",
       cache: "no-cache",
       headers: {
-        content_type: "application/json",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        username: formData["name"],
-      }),
+      body: JSON.stringify({ username: formData["name"] }),
     })
       .then((response) => {
-        return response.json();
+        let res = response.json();
+        console.log(res);
+        return res;
       })
-        .then((json) => {
-            let shoeObj = JSON.parse(json);
-        console.log(shoeObj);
-      }).catch((err) => {
+      .then((json) => {
+        console.log(json);
+        let passArray = [];
+        for (let index in myObj) {
+          // check if the index is one of the needed indices
+          if (
+            index === "US Size" ||
+            index === "name" ||
+            index === "picture"
+          ) {
+            console.log(index);
+            for (item in index[]) {
+              passArray({ item:  });
+            }
+          }
+        }
+
+
+
+        let cardArray = [] 
+
+        for (var k in obj) {
+          key = k;
+          
+        }
+      
+        document.location.href = '/shoes'
+      })
+      .catch((err) => {
         console.log(err);
-      })
+      });
   }
-  
 
   return (
     <>
