@@ -59,8 +59,9 @@ function Form() {
       }),
     })
       .then((response) => {
-        console.log("resp: ", response);
-        return response.json();
+        let res = response.json();
+        console.log(res);
+        return res;
       })
       .then((data) => {
         console.log("Success: ", data);
@@ -84,7 +85,7 @@ function Form() {
       })
       .then((json) => {
         console.log(json);
-        let passArray = [];
+        /*let passArray = [];
         for (let index in myObj) {
           // check if the index is one of the needed indices
           if (
@@ -98,15 +99,26 @@ function Form() {
             }
           }
         }
-
-
+*/
 
         let cardArray = [] 
 
-        for (var k in obj) {
-          key = k;
-          
-        }
+        let indexKeys = Object.keys(json['index'])
+
+        console.log('keys: ', indexKeys)
+        console.log('keys.length: ', indexKeys.length)
+
+        for (var i = 0; i < indexKeys.length; i++) {
+          let card = {
+            shoe_name: json['name'][i],
+            img_url: json['picture'][i],
+            size: (json['US Size'][i] + json['size_shift'][i])
+          }
+          cardArray.push(card);
+        };
+
+        console.log("cards: ", JSON.stringify({ cards: cardArray }))
+        localStorage.setItem("cards", JSON.stringify({ cards: cardArray }))
       
         document.location.href = '/shoes'
       })
