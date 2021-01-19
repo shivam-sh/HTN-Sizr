@@ -67,7 +67,7 @@ function Form() {
         console.log("Success: ", data);
       })
       .catch((err) => {
-        console.log("Error: ", err);
+        alert("Username Taken! \n Here are your shoes!")
       });
 
     fetch("https://sizr-backend.azurewebsites.net/recommendshoes", {
@@ -123,7 +123,7 @@ function Form() {
         document.location.href = '/shoes'
       })
       .catch((err) => {
-        console.log(err);
+        alert("No matching shoes were found :(\n Try measuring again!")
       });
   }
 
@@ -198,7 +198,7 @@ function Form() {
           </div>
           <br />
           <br />
-          <label for="name">Name:</label>
+          <label for="name">Username:</label>
           <div class="form-group">
             <input
               type="text"
